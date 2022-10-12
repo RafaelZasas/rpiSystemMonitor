@@ -35,7 +35,7 @@ func GetSwpFree() (free float64, err error) {
 	cmd := "free | grep Swap | awk '{print $4/$2 * 100.0}'"
 	out, err := exec.Command("bash", "-c", cmd).Output()
 	if err != nil {
-		return "", err
+		return -1, err
 	}
 	strOut := strings.TrimSuffix(string(out), "\n")
 	free, err = strconv.ParseFloat(strOut, 64)
@@ -43,7 +43,7 @@ func GetSwpFree() (free float64, err error) {
 }
 
 //GetSwpUsed returns the percentage of swap file memory that is in use
-func GetSwpUsed() (res string, err error) {
+func GetSwpUsed() (used float64, err error) {
 	cmd := "free | grep Swap | awk '{print $3/$2 * 100.0}'"
 	out, err := exec.Command("bash", "-c", cmd).Output()
 	if err != nil {
